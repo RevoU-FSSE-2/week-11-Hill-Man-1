@@ -30,6 +30,13 @@ exports.updateBook = async (req, res) => {
     try {
         const bookId = req.params.id;
         const { bookStatus } = req.body; 
+        const sqlId = 'SELECT * FROM books WHERE bookId = ?';
+        const [booksId] = await db.query(sqlId, [bookId]);
+
+        if (booksId.length === 0) {
+            return res.status(404).json({ message: 'Books Not Found' });
+        }
+
         const updatedBook = await db.query('UPDATE books SET bookStatus = ? WHERE bookId = ?', [bookStatus, bookId]);
         if(bookStatus === 'booked'){
             return res.status(500).json({ message: 'Only User can Update to Booked'});    
@@ -63,9 +70,19 @@ exports.inputBook = async (req, res) => {
 exports.deleteBook = async (req, res) => {
     try {
         const bookId = req.params.id;
+        const sqlId = 'SELECT * FROM books WHERE bookId = ?';
+        const [booksId] = await db.query(sqlId, [bookId]);
+
+        if (booksId.length === 0) {
+            return res.status(404).json({ message: 'Books Not Found' });
+        }
+
         const sql = 'DELETE FROM books WHERE bookId = ?';
-        const [deleteBook] = await db.query(sql, [bookId]); // Corrected the parameter placement
-        res.status(200).json({ message: 'Book deleted successfully' });
+        const [deleteBook] = await db.query(sql, [bookId]);
+        if (deleteBook.length === 0) {
+            return res.status(404).json({ message: 'Books Not Found' });
+        }
+        res.status(200).json({ message: 'Book deleted successfully' }); 
     } catch (error) {
         console.error('Database error:', error);
         res.status(500).json({ message: 'Error deleting book', error });

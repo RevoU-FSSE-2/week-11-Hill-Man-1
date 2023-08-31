@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const { JWT_SIGN } = require('../config/jwt');
 const db = require('../config/db.connection');
 
-console.log(JWT_SIGN);
 const register = async (req, res, next) => {
     const { username, password, name, address, age, role } = req.body;
 
@@ -17,17 +16,15 @@ const register = async (req, res, next) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const sql = 'INSERT INTO users (username, password, name, address, age, role, roleStatus) VALUES (?, ?, ?, ?, ?, ?, ?)';
-        // Pass 'pending' as the last parameter in the array
         db.query(sql, [username, hashedPassword, name, address, age, role, 'pending'], (err, result) => {
             if (err) {
                 console.error(err);
                 return res.status(500).json({ error: 'Registration failed' });
-            } else {
-                res.status(201).json({
-                    message: 'User registration successful',
-                    data: { id: result.insertId }
-                });
             }
+            res.status(201).json({
+                message: 'User registration successful',
+                data: { id: result.insertId }
+            });
         });
     } catch (error) {
         console.error(error);

@@ -16,12 +16,19 @@ exports.searchBookStatus = async (req, res) => {
     try {
         const bookStatus = req.params.bookStatus;
         const sql = 'SELECT * FROM books WHERE bookStatus = ?';
-        const [books] = await db.query(sql,[bookStatus]);
+        const [books] = await db.query(sql, [bookStatus]);
+
+        if (books.length === 0) {
+            return res.status(404).json({ message: 'Books Not Found' });
+        }
+
         res.status(200).json({ books });
     } catch (error) {
         console.error('Database error:', error);
+        res.status(500).json({ message: 'An error occurred', error });
     }
 };
+
 
 
 // UPDATE STATUS FROM AVAILABLE TO BOOKED
@@ -34,6 +41,7 @@ exports.updateBookStatus = async (req, res) => {
         if (bookStatus !== "booked") {
             return res.status(400).json({ message: 'Book status can only be updated to "booked"' });
         }
+        
 
         res.status(200).json({ message: 'Book status updated successfully' });
     } catch (error) {

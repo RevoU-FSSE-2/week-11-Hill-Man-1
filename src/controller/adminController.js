@@ -15,9 +15,13 @@ exports.getAllUsers = async (req, res) => {
 // GET USER BY ID
 exports.getUsersById = async (req, res) => {
     try {
-        const userId = req.params.id; // Assuming the user ID is in the request parameters
+        const userId = req.params.id;
         const sql = 'SELECT * FROM users WHERE userId = ?';
-        const [users] = await db.query(sql, [userId]); // Corrected the parameter placement
+        const [users] = await db.query(sql, [userId]);
+
+        if (users.length === 0) {
+            return res.status(404).json({ message: 'User Not Found' });
+        }
         res.status(200).json({ users });
     } catch (error) {
         console.error('Database error:', error);
@@ -44,6 +48,13 @@ exports.getAllBooks = async (req, res) => {
 exports.updateRoleStatus = async (req, res) => {
     try {
         const userId = req.params.id;
+        const sqlId = 'SELECT * FROM users WHERE userId = ?';
+        const [idUser] = await db.query(sqlId, [userId]);
+
+        if (idUser.length === 0) {
+            return res.status(404).json({ message: 'User Not Found' });
+        }
+
         const { roleStatus } = req.body; 
 
         const updatedRole = await db.query('UPDATE users SET roleStatus = ? WHERE userId = ?', [roleStatus, userId]);
@@ -58,12 +69,19 @@ exports.updateRoleStatus = async (req, res) => {
 exports.updateBook = async (req, res) => {
     try {
         const bookId = req.params.id;
+        const sqlId = 'SELECT * FROM books WHERE bookId = ?';
+        const [booksId] = await db.query(sqlId, [bookId]);
+
+        if (booksId.length === 0) {
+            return res.status(404).json({ message: 'Books Not Found' });
+        }
+
         const { bookStatus } = req.body; 
         const updatedBook = await db.query('UPDATE books SET bookStatus = ? WHERE bookId = ?', [bookStatus, bookId]);
         if(bookStatus === 'booked'){
             return res.status(500).json({ message: 'Only User can Update to Booked'});    
         }
-        res.status(200).json({ message: `Book Status Updated By Librarian` });
+        res.status(200).json({ message: `Book Status Updated By Admin` });
     } catch (error) {
         res.status(500).json({ message: 'Error updating Book Status', error: error.message });
     }
@@ -93,7 +111,7 @@ exports.deleteBook = async (req, res) => {
     try {
         const bookId = req.params.id;
         const sql = 'DELETE FROM books WHERE bookId = ?';
-        const [deleteBook] = await db.query(sql, [bookId]); // Corrected the parameter placement
+        const [deleteBook] = await db.query(sql, [bookId]); 
         res.status(200).json({ message: 'Book deleted successfully' });
     } catch (error) {
         console.error('Database error:', error);
@@ -104,8 +122,15 @@ exports.deleteBook = async (req, res) => {
 exports.deleteUser = async (req, res) => {
     try {
         const userId = req.params.id;
+        const sqlId = 'SELECT * FROM users WHERE userId = ?';
+        const [idUser] = await db.query(sqlId, [userId]);
+
+        if (idUser.length === 0) {
+            return res.status(404).json({ message: 'User Not Found' });
+        }
+
         const sql = 'DELETE FROM users WHERE userId = ?';
-        const [deleteUser] = await db.query(sql, [userId]); // Corrected the parameter placement
+        const [deleteUser] = await db.query(sql, [userId]); 
         res.status(200).json({message: 'User deleted successfully'});
     } catch (error) {
         console.error('Database error:', error);

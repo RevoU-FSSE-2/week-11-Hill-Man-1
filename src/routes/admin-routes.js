@@ -9,8 +9,8 @@ adminRouter.get('/books', authorizationAdmin, adminController.getAllBooks);
 adminRouter.get('/users', authorizationAdmin, adminController.getAllUsers);
 adminRouter.get('/user/:id', authorizationAdmin, adminController.getUsersById);
 adminRouter.post('/book', authorizationAdmin, adminController.inputBook);
-adminRouter.patch('/users/:id', authorizationAdmin, adminController.updateRoleStatus);
-adminRouter.patch('/books/:id', authorizationAdmin, adminController.updateBook);
+adminRouter.patch('/user/:id', authorizationAdmin, adminController.updateRoleStatus);
+adminRouter.patch('/book/:id', authorizationAdmin, adminController.updateBook);
 
 adminRouter.delete('/book/:id', authorizationAdmin, adminController.deleteBook);
 adminRouter.delete('/user/:id', authorizationAdmin, adminController.deleteUser);
