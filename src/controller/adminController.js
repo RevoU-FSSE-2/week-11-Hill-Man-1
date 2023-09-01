@@ -90,9 +90,9 @@ exports.updateBook = async (req, res) => {
 // CREATE NEW BOOK
 exports.inputBook = async (req, res) => {
     try {
-        const { bookName, author, yearRelase, genre} = req.body;
-        const sql = 'INSERT INTO books (bookName, author, yearRelase, genre, bookStatus) VALUES (?, ?, ?, ?, ?)';
-        db.query(sql, [bookName, author, yearRelase, genre, "available"], (err, result) => {
+        const { bookName, author, yearRelease, genre} = req.body;
+        const sql = 'INSERT INTO books (bookName, author, yearRelease, genre, bookStatus) VALUES (?, ?, ?, ?, ?)';
+        db.query(sql, [bookName, author, yearRelease, genre, "available"], (err, result) => {
             if (err) {
                 console.error(err);
                 res.status(500).json({ error: 'An error occurred while input book' });
