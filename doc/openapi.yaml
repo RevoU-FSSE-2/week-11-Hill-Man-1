@@ -212,6 +212,8 @@ paths:
                 author: 'Gabrielle Zevin '
                 yearRelase: 2022
                 genre: Fiction
+              required:
+                - "yearRelase"  
       security:
         - bearerAuth: []
       responses:
