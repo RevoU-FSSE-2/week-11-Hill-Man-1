@@ -17,7 +17,7 @@ const register = async (req, res, next) => {
 
         const sql = 'INSERT INTO users (username, password, name, address, age, role, roleStatus) VALUES (?, ?, ?, ?, ?, ?, ?)';
         const newUser = db.query(sql, [username, hashedPassword, name, address, age, role, 'pending'])
-            res.status(201).json({
+            res.status(201).json({  
                 message: 'User registration successful',
             });
     } catch (error) {
