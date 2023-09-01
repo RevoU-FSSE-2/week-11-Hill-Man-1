@@ -3,12 +3,11 @@ const  DBConfig = require('./db.config');
 require('dotenv').config;
 
 const poolConfig = {
-    url: DBConfig.DB_URL,
-    database: DBConfig.DB_NAME,
-    host: DBConfig.HOST,
-    password: DBConfig.PASSWORD,
-    user: DBConfig.USER,
-    port: DBConfig.PORT
+    host: 'containers-us-west-37.railway.app',
+    user: 'root',
+    password: '8WiXCEM1TfaJKPKPYbnW',
+    port: 8051,
+    database: 'railway'
 };
 
 module.exports = mysql.createPool(poolConfig);
