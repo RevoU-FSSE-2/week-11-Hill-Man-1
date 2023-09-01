@@ -1,0 +1,325 @@
+openapi: 3.0.0
+info:
+  title: w11
+  version: 1.0.0
+servers:
+  - url: http://localhost:6592
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: Admin
+  - name: Auth
+  - name: Librarian
+  - name: User
+paths:
+  /admin/user/21:
+    patch:
+      tags:
+        - Admin
+      summary: Change roleStatus by Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                roleStatus: approved
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /admin/allusers:
+    get:
+      tags:
+        - Admin
+      summary: Get User by Admin
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /admin/users/librarian:
+    get:
+      tags:
+        - Admin
+      summary: Get User by Role (NY)
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /admin/book/{id}:
+    patch:
+      tags:
+        - Admin
+      summary: Update bookStatus
+      requestBody:
+        content: {}
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Admin
+      summary: Delete Book
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /admin/books:
+    get:
+      tags:
+        - Admin
+      summary: Get Books
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /admin/user/{id}:
+    get:
+      tags:
+        - Admin
+      summary: Get User by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /admin/book:
+    post:
+      tags:
+        - Admin
+      summary: Input Book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                bookName: To Paradise
+                author: Hanya Yanagihara
+                yearRelase: 2022
+                genre: Fiction
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /admin/user/19:
+    delete:
+      tags:
+        - Admin
+      summary: Delete User
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: udiinpetot
+                name: udin
+                password: '123123'
+                address: bandung
+                age: 12
+                role: user
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Log In
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: librarian1
+                password: '121212'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /librarian/inputbook:
+    post:
+      tags:
+        - Librarian
+      summary: Input Book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                bookName: Tomorrow, and Tomorrow, and Tomorrow
+                author: 'Gabrielle Zevin '
+                yearRelase: 2022
+                genre: Fiction
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /librarian/allbooks:
+    get:
+      tags:
+        - Librarian
+      summary: Get All Book
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /librarian/updatebook/4:
+    patch:
+      tags:
+        - Librarian
+      summary: Update Book Status
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                bookStatus: booked
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /librarian/users:
+    get:
+      tags:
+        - Librarian
+      summary: Get All Users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /librarian/deletebook/{id}:
+    delete:
+      tags:
+        - Librarian
+      summary: Delete Book By ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /user/allbooks:
+    get:
+      tags:
+        - User
+      summary: Get Book
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /user/books/available:
+    get:
+      tags:
+        - User
+      summary: Get Book by Status
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /user/updatebookstatus/1:
+    patch:
+      tags:
+        - User
+      summary: Update Booked
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                bookStatus: booked
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
