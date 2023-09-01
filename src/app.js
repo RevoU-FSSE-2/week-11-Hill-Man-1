@@ -16,13 +16,13 @@ const fs = require('fs');
 
 
 const app = express();
-const port = process.env.DB_RAILWAY_PORT || 8051;
+const port = process.env.DB_RAILWAY_HOST || process.env.DB_RAILWAY_PORT;
 
 app.use(bodyParser.json())
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(yaml.parse(fs.readFileSync('./doc/openapi.yaml', 'utf8'))))
-app.use(OpenApiValidator.middleware({ 
-    apiSpec: 'doc/openapi.yaml'
-}))
+// app.use(OpenApiValidator.middleware({ 
+//     apiSpec: 'doc/openapi.yaml'
+// }))
 
 app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
