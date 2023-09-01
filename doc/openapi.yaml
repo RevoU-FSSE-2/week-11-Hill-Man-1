@@ -3,7 +3,7 @@ info:
   title: w11
   version: 1.0.0
 servers:
-  - url: http://localhost:6592
+  - url: week-11-hill-man-1-production.up.railway.app
 components:
   securitySchemes:
     bearerAuth:
