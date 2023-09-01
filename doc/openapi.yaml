@@ -166,8 +166,8 @@ paths:
             schema:
               type: object
               example:
-                username: udiinpetot
-                name: udin
+                username: hilman
+                name: hilman
                 password: '123123'
                 address: bandung
                 age: 12
