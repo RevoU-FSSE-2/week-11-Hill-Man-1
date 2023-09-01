@@ -16,7 +16,7 @@ const fs = require('fs');
 
 
 const app = express();
-const port = process.env.URL || 8051;
+const port = 8051;
 
 app.use(bodyParser.json())
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(yaml.parse(fs.readFileSync('./doc/openapi.yaml', 'utf8'))))
