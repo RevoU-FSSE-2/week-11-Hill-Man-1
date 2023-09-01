@@ -3,10 +3,12 @@ const  DBConfig = require('./db.config');
 require('dotenv').config;
 
 const poolConfig = {
+    url: DBConfig.DB_URL,
+    database: DBConfig.DB_NAME,
     host: DBConfig.HOST,
-    user: DBConfig.USER,
     password: DBConfig.PASSWORD,
-    database: DBConfig.DB_NAME
+    user: DBConfig.USER,
+    port: DBConfig.PORT
 };
 
 module.exports = mysql.createPool(poolConfig);
