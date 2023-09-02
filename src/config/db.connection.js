@@ -3,18 +3,19 @@ const  DBConfig = require('./db.config');
 require('dotenv').config;
 
 // const poolConfig = {
-//     host: 'containers-us-west-37.railway.app',
+//     host: 'containers-us-west-150.railway.app',
 //     user: 'root',
-//     password: '8WiXCEM1TfaJKPKPYbnW',
-//     port: 8051,
+//     password: 'OUN6iePSwOn8eHUI9OAz',
+//     port: 5895,
 //     database: 'railway'
 // };
 
-const poolConfig = {
+const db = {
     host: DBConfig.HOST,
     user: DBConfig.USER,
     password: DBConfig.PASSWORD,
-    database: DBConfig.DB_NAME
+    port:DBConfig.PORT,
+    database: DBConfig.DB_RAILWAY_NAME
 };
 
-module.exports = mysql.createPool(poolConfig);
+module.exports = mysql.createPool(db);
